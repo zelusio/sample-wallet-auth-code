@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "register": "node register.js",
-    "login": "login.js"
+    "login": "node login.js"
   },
   "repository": {
     "type": "git",
