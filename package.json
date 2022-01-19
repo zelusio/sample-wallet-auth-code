@@ -1,0 +1,26 @@
+{
+  "name": "sample-wallet-auth-code",
+  "version": "1.0.0",
+  "description": "Sample code to authenticate to the wallet backend without using the mobile app. May be useful for testing purposes.",
+  "main": "index.js",
+  "scripts": {
+    "register": "node register.js",
+    "login": "login.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zelusio/sample-wallet-auth-code.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zelusio/sample-wallet-auth-code/issues"
+  },
+  "homepage": "https://github.com/zelusio/sample-wallet-auth-code#readme",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "dotenv": "^14.2.0",
+    "ethers": "^5.5.3"
+  }
+}
