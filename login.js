@@ -1,5 +1,6 @@
 const { ethers } = require('ethers');
 const {default: axios} = require("axios");
+const API_URL = 'https://dev.zelus.io' // this can be changed to api.zelus.io if you want
 
 /**
  * Get the server time of {@link API_URL}

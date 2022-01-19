@@ -1,5 +1,6 @@
 const { ethers } = require('ethers');
 const axios = require('axios').default;
+const fs = require('fs');
 const API_URL = 'https://dev.zelus.io' // this can be changed to api.zelus.io if you want
 
 
@@ -14,9 +15,10 @@ async function main() {
     console.log(`\tPrivate key: ${wallet.privateKey}`);
     console.log(`\tPublic key: ${wallet.publicKey}`);
 
-    // register the wallet with a sample email
-    // NOTE that you will need to change the email if you wish to register again
+    // register the wallet with a sample, random email
     const email = `${Math.floor(Math.random() * 10000)}@ironwoodcyber.com`;
+
+    // build and send the request
     const requestBody = {
         email,
         ethereum_address: wallet.address,
@@ -31,6 +33,9 @@ async function main() {
     console.log(`\tGUID: ${registrationResponse.data.guid}`)
     console.log(`\tToken (good for 15 minutes): ${registrationResponse.data.token}`)
 
+    // write out data to env
+    fs.writeFileSync('.env', `ADDRESS="${wallet.address}"\nPRIVATE_KEY="${wallet.privateKey}"`)
+    console.log(`[INFO] wrote address and private key to .env`)
 
 
 }
