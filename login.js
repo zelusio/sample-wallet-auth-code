@@ -1,12 +1,17 @@
 const { ethers } = require('ethers');
 const {default: axios} = require("axios");
+const fs = require('fs');
 require('dotenv').config();
-const API_URL = 'https://dev.zelus.io' // this can be changed to api.zelus.io if you want
+
+
+const API_URL = 'https://dev.wallet.zelus.io' // prod, this can be changed to dev.wallet.zelus.io or staging.wallet.zelus.io, but will require an actual zelus wallet account for email verification
+const WALLET_PRIVATE_KEY = process.env.PRIVATE_KEY  // YOU ARE RESPONSIBLE FOR CREATING THIS AND KEEPING IT SAFE - should be the private key to an Ethereum wallet
+
+const wallet = new ethers.Wallet(WALLET_PRIVATE_KEY);
 
 /** Make sure that the necessary environment variables are there */
 function checkEnvironment() {
-    if (!process.env.ADDRESS) throw new Error(`Missing address: make sure to run 'npm run register' first!`);
-    if (!process.env.PRIVATE_KEY) throw new Error(`Missing private key: make sure to run 'npm run register' first!`);
+    if (!WALLET_PRIVATE_KEY) throw new Error(`Missing private key: make sure to run 'npm run register' first!`);
 }
 
 /**
@@ -24,11 +29,10 @@ async function getCurrentTime() {
 
 async function buildRequest(timestamp) {
 
-    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY);
     const signature = await wallet.signMessage(timestamp);
 
     return {
-        ethereum_address: process.env.ADDRESS.toLowerCase(),
+        ethereum_address: wallet.address.toLowerCase(),
         timestamp: timestamp,
         signature: signature
     }
@@ -48,10 +52,13 @@ async function main() {
     console.log(`[INFO] built request data: ${JSON.stringify(request)}`)
 
     try {
+        console.log(`API url: `, API_URL)
         const loginResponse = await axios.post(`${API_URL}/auth/login`, request);
         console.log(`[INFO] got status code ${loginResponse.status} from the request`);
         if(loginResponse.data.token) {
             console.log(`[INFO] Got token from login request: ${loginResponse.data.token}`)
+            fs.writeFileSync('./token.txt', loginResponse.data.token)
+            console.log(`Wrote token to token.txt`)
         }
     }
     catch (err) {

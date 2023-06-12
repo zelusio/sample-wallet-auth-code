@@ -19,8 +19,9 @@
   },
   "homepage": "https://github.com/zelusio/sample-wallet-auth-code#readme",
   "dependencies": {
-    "axios": "^0.25.0",
-    "dotenv": "^14.2.0",
-    "ethers": "^5.5.3"
+    "axios": "^1.4.0",
+    "dotenv": "^16.1.4",
+    "ethers": "^6.5.1",
+    "fs": "^0.0.1-security"
   }
 }
